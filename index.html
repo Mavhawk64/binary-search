@@ -1,0 +1,77 @@
+<!-- Create a simple webpage (no css needed) that has the following attributes: -->
+<!-- 1. A header that says "Binary Search for Sensitivity" -->
+<!-- 2. Two input boxes that denote the minimum and maximum of the range. -->
+<!-- 3. A button that says "Calculate" -->
+<!-- 4. A text box that displays the result of the calculation. (min + max) / 2 -->
+<!-- 5. 4 buttons that say "Too Low", "Too High", "Just Right", and "Unlock Ranges" -->
+<!-- When someone presses the Calculate button, lock the range boxes, and unlock if they press the Unlock Ranges button -->
+<!-- When someone presses the Too Low button, set the minimum to the result of the calculation and Calculate -->
+<!-- When someone presses the Too High button, set the maximum to the result of the calculation and Calculate -->
+<!-- When someone presses the Just Right button, set the minimum and maximum to the result of the calculation and lock the Calculate button -->
+<!-- When someone presses the Unlock Ranges button, unlock the range boxes and the Calculate button -->
+
+<!-- Path: index.html -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Binary Search for Sensitivity</title>
+</head>
+
+<body>
+    <h1>Binary Search for Sensitivity</h1>
+    <input type="number" id="min" placeholder="Minimum">
+    <input type="number" id="max" placeholder="Maximum">
+    <button id="calculate">Calculate</button>
+    <input type="number" id="result" placeholder="Result" disabled>
+    <button id="tooLow">Too Low</button>
+    <button id="tooHigh">Too High</button>
+    <button id="justRight">Just Right (Copy to Clipboard)</button>
+    <button id="unlockRanges">Unlock Ranges</button>
+    <script>
+        const min = document.getElementById("min");
+        const max = document.getElementById("max");
+        const calculate = document.getElementById("calculate");
+        const result = document.getElementById("result");
+        const tooLow = document.getElementById("tooLow");
+        const tooHigh = document.getElementById("tooHigh");
+        const justRight = document.getElementById("justRight");
+        const unlockRanges = document.getElementById("unlockRanges");
+
+        calculate.addEventListener("click", () => {
+            result.value = (Number(min.value) + Number(max.value)) / 2;
+            min.disabled = true;
+            max.disabled = true;
+            calculate.disabled = true;
+        });
+
+        tooLow.addEventListener("click", () => {
+            min.value = result.value;
+            result.value = (Number(min.value) + Number(max.value)) / 2;
+        });
+
+        tooHigh.addEventListener("click", () => {
+            max.value = result.value;
+            result.value = (Number(min.value) + Number(max.value)) / 2;
+        });
+
+        justRight.addEventListener("click", () => {
+            min.value = result.value;
+            max.value = result.value;
+            calculate.disabled = true;
+            navigator.clipboard.writeText(result.value);
+            alert("Copied to clipboard! :D");
+        });
+
+        unlockRanges.addEventListener("click", () => {
+            min.disabled = false;
+            max.disabled = false;
+            calculate.disabled = false;
+        });
+    </script>
+</body>
+
+</html>
